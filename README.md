@@ -13,16 +13,18 @@ A simple UNIX command line interpreter written in C, built as part of the Holber
 
 <br>
 
-* 📖 [Description]()
-* ✨ [Features]()
-* ⚙️ [Installation]()
-* 🛠️ [Compilation]()
+	[Technologies used](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#technologies-used)
+* 📖 [Description](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#-description)
+
+* ⚙️ [Installation](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#-description)
+* 🛠️ [Compilation](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%EF%B8%8F-compilation)
 * 📘 [Manual]()
 * ⚠️ [Limitations]()
 * 🧪 [Valgrind]()
 * 🔄 [Flowchart]()
 * ▶️ [Usage]()
-* 🗂️ [Project Structure]()
+* ✨ [Features]()
+* 🗂️ [Project Structure](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%EF%B8%8F-project-structure)
 * 👨‍💻 [Authors]()
 
 </details>
@@ -87,15 +89,6 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 ```bash
 ./hsh
 ```
-
-
-## Compilation
-
-```bash
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
-```
-
-## ▶️ Usage
 
 **Interactive mode:**
 $ ./hsh
