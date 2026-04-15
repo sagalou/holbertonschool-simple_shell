@@ -22,7 +22,7 @@ A simple UNIX command line interpreter written in C, built as part of the Holber
 * ✨ [Features](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#features)
 * 🗂️ [Project Structure](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%EF%B8%8F-project-structure)
 * 👨‍💻 [Authors](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%E2%80%8D-authors)
-* 👥 [Additionals](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#-additionals)
+* 👥 [Acknowledgements](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#-additionals)
 
 
 WIP
@@ -61,7 +61,7 @@ Before starting, ensure you have:
 | Libraries | glibc |
 | Tools | `git`, `valgrind` |
 | Permissions | Ability to compile and execute binaries |
-| Betty code style compliant |
+| Betty | Betty code style compliant |
 
 ---
 
@@ -120,7 +120,7 @@ $ echo "/bin/ls" | ./hsh
 - Kevin Rigal (splint314) — krigal323@gmail.com
 - Sagal-Louise Haider (sagalou) — sagal.louise.haider@gmail.com
 
-## 👥 Additionals
+## 👥 Acknowledgements
 
 This project is part of the Holberton School curriculum.
 Special thanks to Hugo Chilemme & Sofian Messaoui for their guidance.
