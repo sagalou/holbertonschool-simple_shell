@@ -122,5 +122,5 @@ $ echo "/bin/ls" | ./hsh
 
 ## 👥 Acknowledgements
 
-This project is part of the Holberton School curriculum.
+This project is part of the Holberton School curriculum.  
 Special thanks to Hugo Chilemme & Sofian Messaoui for their guidance.
