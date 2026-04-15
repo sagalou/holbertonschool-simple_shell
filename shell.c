@@ -3,6 +3,7 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 char **split_string(char *str)
 {
@@ -23,9 +24,38 @@ char **split_string(char *str)
 	return (av);                        /* return the array of words */
 }
 
-int main(void)
+char *find_path(char *cmd, char**env)
 {
-	char *line = NULL;				/* buffer to store the command typed by the user */
+    int i = 0;
+    while (env[i] != NULL)
+    {
+        if (strncmp(env[i], "PATH=", 5) == 0)
+        {
+            char *path = env[i] + 5;
+            char *dir = strtok(path, ":");
+            while (dir != NULL)
+            {
+                char full_path[1024];
+                struct stat st;
+
+                sprintf(full_path, "%s/%s", dir, cmd);
+                if (stat(full_path, &st) == 0)
+                {
+                    return (strdup(full_path));
+                }
+                dir = strtok(NULL, ":");
+            }
+        }
+        i++;
+    }
+    return (NULL);
+}
+
+int main(int ac, char **av, char **env)
+{
+	(void)ac;
+    (void)av;
+    char *line = NULL;				/* buffer to store the command typed by the user */
 	size_t n = 0;					/* size of the buffer for getline */
 
 	printf("$ ");					/* display the prompt for the first time */
@@ -38,7 +68,15 @@ int main(void)
 
 		if (pid == 0)						/* child process: fork() returns 0 */
 		{
-			execve(av[0], av, NULL);		/* replace child with the command to execute */
+            char *cmd = find_path(av[0], env);
+            if (cmd == NULL)
+            {
+                fprintf(stderr, "%s: command not found\n", av[0]);
+            }
+            else
+            {
+            execve(cmd, av, env);
+            }
 		}
 		else								/* parent process: fork() returns child's PID */
 		{
