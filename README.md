@@ -15,15 +15,15 @@ A simple UNIX command line interpreter written in C, built as part of the Holber
 
 * 📖 [Description]()
 * ✨ [Features]()
-* 🗂️ [Project Structure]()
 * ⚙️ [Installation]()
 * 🛠️ [Compilation]()
-* ▶️ [Usage]()
 * 📘 [Manual]()
 * ⚠️ [Limitations]()
 * 🧪 [Valgrind]()
 * 🔄 [Flowchart]()
-* 👨‍💻 [Author]()
+* ▶️ [Usage]()
+* 🗂️ [Project Structure]()
+* 👨‍💻 [Authors]()
 
 </details>
 
@@ -39,8 +39,7 @@ A simple UNIX command line interpreter written in C, built as part of the Holber
 
 ![Git](https://camo.githubusercontent.com/18c1d28951104e3dbf342dcaae38b07f65c95f0401e5de36aa560f6073db149e/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6769742d2532334630353033332e7376673f7374796c653d666f722d7468652d6261646765266c6f676f3d676974266c6f676f436f6c6f723d7768697465)
 
-## Description
-
+## 📖 Description
 `hsh` is a simple shell that reads commands from standard input and executes them,
 in both interactive and non-interactive mode.
 
@@ -63,7 +62,7 @@ Before starting, ensure you have:
 
 ---
 
-## Installation
+## ⚙️ Installation
 
 ## Clone the repository
 
@@ -77,13 +76,13 @@ git clone https://github.com/sagalou/holbertonschool-simple_shell.git
 cd holbertonschool-simple_shell
 ```
 
-## Compile the shell
+## 🛠️ Compilation
 
 ```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 ```
 
-## Use the shell
+## ▶️ Usage
 
 ```bash
 ./hsh
@@ -96,7 +95,7 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 ```
 
-## Usage
+## ▶️ Usage
 
 **Interactive mode:**
 $ ./hsh
@@ -119,7 +118,7 @@ $ echo "/bin/ls" | ./hsh
 - gcc with flags: `-Wall -Werror -Wextra -pedantic -std=gnu89`
 - Betty code style compliant
 
-## Files
+## 🗂️ Project Structure
 
 | File | Description |
 |---|---|
@@ -128,7 +127,7 @@ $ echo "/bin/ls" | ./hsh
 | `prompt.c` | Handle prompt display |
 |||
 
-## Authors
+## 👨‍💻 Authors
 
 - Kevin Rigal (splint314) — krigal323@gmail.com
 - Sagal-Louise Haider (sagalou) — sagal.louise.haider@gmail.com
