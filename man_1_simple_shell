@@ -1,0 +1,49 @@
+.TH HSH 1 "April 2026" "1.0" "User Commands"
+
+.SH NAME
+hsh - simple UNIX command interpreter
+
+.SH SYNOPSIS
+.B hsh
+
+.SH DESCRIPTION
+.B hsh
+is a simple UNIX command line interpreter that reads commands from standard input and executes them.
+
+It supports both interactive and non-interactive modes.
+
+.SH USAGE
+.SS Interactive mode
+Run the shell and type commands:
+
+.nf
+$ ./hsh
+($) ls
+($) exit
+.fi
+
+.SS Non-interactive mode
+Pipe commands into the shell:
+
+.nf
+$ echo "ls" | ./hsh
+.fi
+
+.SH FEATURES
+.IP (bu 2
+Executes standard UNIX commands
+.IP (bu 2
+Supports environment variable display
+.IP (bu 2
+Handles basic process execution
+
+.SH EXIT STATUS
+The shell returns the exit status of the last executed command.
+
+.SH AUTHORS
+Sagal-Louise Haider (sagalou) [sagal.louise.haider@gmail.com](mailto:sagal.louise.haider@gmail.com)
+.br
+Kevin Rigal (splint314) [krigal323@gmail.com](mailto:krigal323@gmail.com)
+
+.SH SEE ALSO
+sh(1), bash(1)
