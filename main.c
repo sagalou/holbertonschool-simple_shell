@@ -1,14 +1,12 @@
-<<<<<<< HEAD
 #include "main.h"
 
 /**
  * main - Entry point of the simple shell
- *        Displays a prompt, reads a command, executes it, and loops
  * @ac: argument count (unused)
  * @av: argument vector (unused)
  * @env: environment variables passed to execve
  *
- * Return: 0 on success (when EOF is reached with Ctrl+D)
+ * Return: 0 on success
  */
 int main(int ac, char **av, char **env)
 {
@@ -16,7 +14,6 @@ int main(int ac, char **av, char **env)
 	size_t n = 0;
 	char **args;
 	pid_t pid;
-	char *cmd;
 
 	(void)ac;
 	(void)av;
@@ -36,7 +33,16 @@ int main(int ac, char **av, char **env)
 				printf("$ ");
 			continue;
 		}
-
+		if (strcmp(args[0], "exit") == 0)
+			builtin_exit();
+		if (strcmp(args[0], "env") == 0)
+		{
+			builtin_env(env);
+			free(args);
+			if (isatty(STDIN_FILENO))
+				printf("$ ");
+			continue;
+		}
 		pid = fork();
 		if (pid == -1)
 		{
@@ -44,26 +50,10 @@ int main(int ac, char **av, char **env)
 			free(args);
 			continue;
 		}
-
 		if (pid == 0)
-		{
-			cmd = find_path(args[0], env);
-			if (cmd == NULL)
-			{
-				fprintf(stderr, "%s: command not found\n", args[0]);
-				free(args);
-				exit(127);
-			}
-			execve(cmd, args, env);
-			perror(cmd);
-			free(cmd);
-			free(args);
-			exit(1);
-		}
+			execute_cmd(args, env);
 		else
-		{
 			wait(NULL);
-		}
 		free(args);
 		if (isatty(STDIN_FILENO))
 			printf("$ ");

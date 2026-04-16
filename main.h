@@ -12,5 +12,8 @@ char *find_path(char *cmd, char**env);
 char **split_string(char *str);
 int main(int ac, char **av, char **env);
 char *_getenv(const char *name);
+void builtin_exit(void);
+void builtin_env(char **env);
+void execute_cmd(char **argds, char **env);
 
 #endif
