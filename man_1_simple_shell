@@ -1,25 +1,33 @@
 .TH HSH 1 "April 2026" "1.0" "User Commands"
 
 .SH NAME
-hsh - simple UNIX command interpreter
+hsh \- simple UNIX command interpreter
 
 .SH SYNOPSIS
+.B hsh
+.br
+.B echo
+.I "command"
+|
 .B hsh
 
 .SH DESCRIPTION
 .B hsh
-is a simple UNIX command line interpreter that reads commands from standard input and executes them.
-
+is a simple UNIX command line interpreter written in C, built as part of the
+Holberton School curriculum.
+It reads commands from standard input and executes them.
 It supports both interactive and non-interactive modes.
 
 .SH USAGE
+
 .SS Interactive mode
-Run the shell and type commands:
+Launch the shell and type commands directly:
 
 .nf
 $ ./hsh
-($) ls
-($) exit
+$ ls
+$ /bin/ls
+$ exit
 .fi
 
 .SS Non-interactive mode
@@ -27,23 +35,133 @@ Pipe commands into the shell:
 
 .nf
 $ echo "ls" | ./hsh
+$ echo "/bin/ls -l" | ./hsh
+$ cat script.txt | ./hsh
+.fi
+
+.SH BUILTINS
+
+The following built-in commands are supported:
+
+.TP
+.B exit
+Exit the shell with status 0.
+
+.TP
+.B env
+Print all environment variables to standard output, one per line.
+
+.SH EXIT STATUS
+
+.TP
+.B 0
+Success — the command executed without error.
+
+.TP
+.B 127
+Command not found — the given command could not be located in
+.BR PATH .
+
+.TP
+.B 1
+Execution failure — the command was found but
+.BR execve (2)
+failed.
+
+.SH COMPILATION
+
+.nf
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+.fi
+
+.SH MEMORY CHECK (VALGRIND)
+
+To check for memory leaks:
+
+.nf
+valgrind --leak-check=full --show-leak-kinds=all \\
+         --track-origins=yes ./hsh
 .fi
 
 .SH FEATURES
-.IP (bu 2
-Executes standard UNIX commands
-.IP (bu 2
-Supports environment variable display
-.IP (bu 2
-Handles basic process execution
 
-.SH EXIT STATUS
-The shell returns the exit status of the last executed command.
+.IP \(bu 2
+Displays a prompt and waits for user input (interactive mode)
+.IP \(bu 2
+Executes commands using their full path (e.g.
+.BR /bin/ls )
+.IP \(bu 2
+Searches for commands in the directories listed in
+.B PATH
+.IP \(bu 2
+Handles end-of-file (Ctrl+D) gracefully
+.IP \(bu 2
+Supports the
+.B env
+and
+.B exit
+built-in commands
+.IP \(bu 2
+Works in non-interactive (piped) mode
 
-.SH AUTHORS
-Sagal-Louise Haider (sagalou) [sagal.louise.haider@gmail.com](mailto:sagal.louise.haider@gmail.com)
-.br
-Kevin Rigal (splint314) [krigal323@gmail.com](mailto:krigal323@gmail.com)
+.SH LIMITATIONS
+
+.IP \(bu 2
+No support for pipes
+.RB ( | )
+.IP \(bu 2
+No support for redirections
+.RB ( > ,
+.BR < ,
+.BR >> )
+.IP \(bu 2
+No support for semicolons or command chaining
+.IP \(bu 2
+No support for quotes or escape characters
+.IP \(bu 2
+No support for environment variable expansion
+.RB ( $VAR )
+.IP \(bu 2
+No history, no tab-completion
+
+.SH FILES
+
+.TP
+.B main.c
+Entry point of the shell.
+
+.TP
+.B shell.c
+String splitting and command execution logic.
+
+.TP
+.B find_path.c
+PATH resolution — searches for the full path of a command.
+
+.TP
+.B builtins.c
+Built-in commands:
+.B exit
+and
+.BR env .
+
+.TP
+.B env.c
+Environment variable printing helper.
+
+.TP
+.B main.h
+Header file — function prototypes and includes.
 
 .SH SEE ALSO
-sh(1), bash(1)
+.BR sh (1),
+.BR bash (1),
+.BR execve (2),
+.BR fork (2),
+.BR wait (2),
+.BR getline (3)
+
+.SH AUTHORS
+Sagal-Louise Haider (sagalou) \(em sagal.louise.haider@gmail.com
+.br
+Kevin Rigal (splint314) \(em krigal323@gmail.com
