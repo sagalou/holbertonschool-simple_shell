@@ -34,7 +34,11 @@ int main(int ac, char **av, char **env)
 			continue;
 		}
 		if (strcmp(args[0], "exit") == 0)
+        {
+            free(args);
+            free(line);
 			builtin_exit();
+        }
 		if (strcmp(args[0], "env") == 0)
 		{
 			builtin_env(env);
