@@ -15,5 +15,6 @@ char *_getenv(const char *name);
 void builtin_exit(void);
 void builtin_env(char **env);
 void execute_cmd(char **argds, char **env);
+int handle_builtins(char **args, char **env, char *line);
 
 #endif

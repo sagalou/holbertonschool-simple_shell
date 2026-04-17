@@ -20,7 +20,7 @@ char **split_string(char *str)
 		i++;           /* move to next slot */
 		token = strtok(NULL, " "); /* next calls: pass NULL to continue splitting */
 	}
-	av = realloc(av, (i + 1) * sizeof(char *)); /* add one slot for NULL terminator */
+	av = realloc(av, (i + 1) * sizeof(char *)); /* add NULL terminator slot */
 	av[i] = NULL;  /* NULL-terminate the array like argv */
 	return (av);   /* return the array of words */
 }
@@ -47,4 +47,29 @@ void execute_cmd(char **args, char **env)
 	free(cmd);    /* free the path string */
 	free(args);   /* free the args array */
 	exit(1);      /* exit with error if execve failed */
+}
+
+/**
+ * handle_builtins - checks and executes built-in commands
+ * @args: array of arguments
+ * @env: environment variables
+ * @line: input line buffer
+ *
+ * Return: 1 if built-in was executed, 0 otherwise
+ */
+int handle_builtins(char **args, char **env, char *line)
+{
+	if (strcmp(args[0], "exit") == 0)
+	{
+		free(args);
+		free(line);
+		exit(0);
+	}
+	if (strcmp(args[0], "env") == 0)
+	{
+		builtin_env(env);
+		free(args);
+		return (1);
+	}
+	return (0);
 }
