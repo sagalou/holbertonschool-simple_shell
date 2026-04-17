@@ -24,6 +24,12 @@ int main(int ac, char **av, char **env)
 	while (getline(&line, &n, stdin) != -1)
 	{
 		line[strlen(line) - 1] = '\0';
+        if (line[0] == '\0')
+        {
+            if (isatty(STDIN_FILENO))
+                printf("$ ");
+            continue;
+        }
 		args = split_string(line);
 
 		if (args[0] == NULL)
@@ -37,6 +43,7 @@ int main(int ac, char **av, char **env)
         {
             free(args);
             free(line);
+            line = NULL;
 			exit(0);
         }
 		if (strcmp(args[0], "env") == 0)
