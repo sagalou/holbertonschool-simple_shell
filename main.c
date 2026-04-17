@@ -37,7 +37,7 @@ int main(int ac, char **av, char **env)
         {
             free(args);
             free(line);
-			builtin_exit();
+			exit(0);
         }
 		if (strcmp(args[0], "env") == 0)
 		{
