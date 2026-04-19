@@ -105,7 +105,7 @@ in both interactive and non-interactive mode.
 
 ## 🖼️ Picture
 
-![Flowchart](https://imgur.com/a/ZzvMvjF)
+![Flowchart](./flowchart.png)
 
 ---
 
