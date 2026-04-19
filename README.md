@@ -159,23 +159,19 @@ $ echo "/bin/ls" | ./hsh
 
 ## 📘 Manual
 
-Missing features
+To view the manual page for `hsh`, first move the man file to the appropriate directory and use the `man` command:
 
-No pipes (ls | grep foo) — only one command at a time
-No redirections (>, <, >>, 2>)
-No command chaining (;, &&, ||)
-No quotes or escape characters ("hello world", \', \n)
-No variable expansion ($HOME, $?, $$)
-No wildcards / globbing (*.c, ?)
-No relative path execution (./script.sh) — only absolute paths or commands found via PATH
-No command history (up/down arrows)
-No tab-completion
-No shell script support (e.g. ./hsh script.sh)
+```bash
+sudo cp hsh.1 /usr/share/man/man1/
+sudo gzip /usr/share/man/man1/hsh.1
+man hsh
+```
 
-Missing builtins
+Alternatively, you can display it without installation using:
 
-No cd — cannot change directory
-exit does not accept an exit code (exit 1)
+```bash
+man ./hsh.1
+```
 
 ## ⚠️ Limitations
 
