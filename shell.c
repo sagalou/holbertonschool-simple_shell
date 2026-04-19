@@ -59,17 +59,17 @@ void execute_cmd(char **args, char **env)
  */
 int handle_builtins(char **args, char **env, char *line)
 {
-	if (strcmp(args[0], "exit") == 0)
+	if (strcmp(args[0], "exit") == 0) /* check if command is "exit" */
 	{
-		free(args);
-		free(line);
-		exit(0);
+		free(args); /* free the arguments array before exiting */
+		free(line); /* free the input line buffer before exiting */
+		exit(0);    /* terminate the shell with success status */
 	}
-	if (strcmp(args[0], "env") == 0)
+	if (strcmp(args[0], "env") == 0) /* check if command is "env" */
 	{
-		builtin_env(env);
-		free(args);
-		return (1);
+		builtin_env(env); /* print all environment variables */
+		free(args);       /* free args after execution */
+		return (1);       /* signal that a built-in was handled */
 	}
-	return (0);
+	return (0); /* no built-in matched, caller should fork and execute */
 }
