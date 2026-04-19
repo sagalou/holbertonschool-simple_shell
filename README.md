@@ -28,9 +28,6 @@ A simple UNIX command line interpreter written in C, built as part of the Holber
 * 👨‍💻 [Authors](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%E2%80%8D-authors)
 * 👥 [Acknowledgements](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#-additionals)
 
-
-WIP
-
 * []()
 
 </details>
@@ -210,7 +207,7 @@ find_path allocates with strdup but cmd is never freed in the parent after wait
 
 
 ## 🧪 Valgrind
-
+```text
 ==2833== Memcheck, a memory error detector
 ==2833== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
 ==2833== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
@@ -268,7 +265,7 @@ $ exit
 ==2833== 
 ==2833== For lists of detected and suppressed errors, rerun with: -s
 ==2833== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-
+```
 ## ✨ Features
 
 - Display a prompt and wait for user input
