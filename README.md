@@ -65,7 +65,7 @@ in both interactive and non-interactive mode.
 ◇─────────────◇
 ◇    EOF ?    ◇──── yes ──→ ┌─────────┐
 ◇─────────────◇             │  EXIT   │
-         │ no               └─────────┘
+         │ no                └─────────┘
          ▼
 ┌─────────────────────┐
 │   split_string()    │
@@ -91,11 +91,11 @@ in both interactive and non-interactive mode.
          ▼                                │
 ◇──────────────◇                          │
 ◇  cmd == NULL ? ◇── yes ──→ ┌──────────────┐
-◇──────────────◇            │ print error  │
-         │ no               │  (no fork!)  │
-         ▼                  └──────┬───────┘
-┌──────────────────────────┐       │
-│ fork() + execve() + wait()│◄─────┘
+◇──────────────◇             │ print error  │
+         │ no                 │  (no fork!)  │
+         ▼                    └──────┬───────┘
+┌──────────────────────────┐         │
+│ fork() +execve()+ wait() │   ◄─────┘
 └────────────┬─────────────┘
              │
              ▼
