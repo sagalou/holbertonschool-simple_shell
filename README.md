@@ -105,7 +105,7 @@ in both interactive and non-interactive mode.
 
 ## 🖼️ Picture
 
-![Flowchart](https://github.com/sagalou/holbertonschool-simple_shell/blob/dev/flowchart.png?raw=true)
+![Flowchart]([https://github.com/sagalou/holbertonschool-simple_shell/blob/dev/flowchart.png?raw=true](https://github.com/sagalou/holbertonschool-simple_shell/blob/dev/flowchart.png?raw=true))
 
 ---
 
