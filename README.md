@@ -270,6 +270,7 @@ $ exit
 ==2833== 
 ==2833== For lists of detected and suppressed errors, rerun with: -s
 ==2833== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+```
 
 ## ✨ Features
 
