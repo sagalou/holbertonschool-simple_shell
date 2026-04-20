@@ -28,6 +28,7 @@ A simple UNIX command line interpreter written in C, built as part of the Holber
 * 👨‍💻 [Authors](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%E2%80%8D-authors)
 * 👥 [Acknowledgements](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#-additionals)
 
+
 </details>
 
 ## 📟 Technologies used
@@ -272,9 +273,10 @@ $ exit
 | File | Description |
 |---|---|
 | `main.c` | Entry point |
-| `env.c` | Print environment |
-| `prompt.c` | Handle prompt display |
-|||
+| `Builtins` | Built-in commands |
+| `main.h` | Core headers|
+| `shell.c` | Command handling|
+| `find_path.c` | Path resolution |
 
 ## 👨‍💻 Authors
 
