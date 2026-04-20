@@ -34,19 +34,30 @@ char **split_string(char *str)
  */
 void execute_cmd(char **args, char **env)
 {
-	char *cmd = find_path(args[0], env); /* search command full path in PATH */
+	char *cmd = find_path(args[0], env);
+	pid_t pid;
 
-	if (cmd == NULL) /* command not found in any PATH directory */
+	if (cmd == NULL)
 	{
-		fprintf(stderr, "%s: command not found\n", args[0]); /* print error */
-		free(args); /* free memory before exiting */
-		exit(127);  /* exit code 127 = command not found (Unix convention) */
+		fprintf(stderr, "%s: command not found\n", args[0]);
+		return;
 	}
-	execve(cmd, args, env); /* replace child process with the command */
-	perror(cmd);  /* only reached if execve fails */
-	free(cmd);    /* free the path string */
-	free(args);   /* free the args array */
-	exit(1);      /* exit with error if execve failed */
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		free(cmd);
+		return;
+	}
+	if (pid == 0) /* child: replace with the command */
+	{
+		execve(cmd, args, env);
+		perror(cmd);
+		free(cmd);
+		exit(1);
+	}
+	wait(NULL); /* parent: wait for child to finish */
+	free(cmd);
 }
 
 /**
