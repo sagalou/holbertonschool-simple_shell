@@ -282,9 +282,10 @@ $ exit
 | File | Description |
 |---|---|
 | `main.c` | Entry point |
-| `env.c` | Print environment |
-| `prompt.c` | Handle prompt display |
-|||
+| `Builtins` | Built-in commands |
+| `main.h` | Core headers|
+| `shell.c` | Command handling|
+| `find_path.c` | Path resolution |
 
 ## 👨‍💻 Authors
 
