@@ -103,7 +103,7 @@ in both interactive and non-interactive mode.
 </pre>
 ## 🖼️ Picture
 
-![Flowchart](./flowchart.png)
+![Flowchart](https://i.imgur.com/dMKaWHh.png)
 
 ---
 
