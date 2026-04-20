@@ -44,6 +44,7 @@ WIP
 in both interactive and non-interactive mode.
 
 ## 🔄 Flowchart
+<pre>
 ┌─────────────────┐
 │      START      │
 └────────┬────────┘
@@ -102,7 +103,7 @@ in both interactive and non-interactive mode.
              ┌──────────────────────────┘
              ▼
       ↻ Back to the prompt
-
+</pre>
 ## 🖼️ Picture
 
 ![Description]()
