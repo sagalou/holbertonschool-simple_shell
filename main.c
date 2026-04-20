@@ -18,9 +18,10 @@ static int process_line(char *line, char **env, char *shell_name, int cmd_num)
 		return (0);
 
 	args = split_string(line);
-	if (args[0] == NULL)
+	if (args == NULL || args[0] == NULL)
 	{
-		free(args);
+		if (args != NULL)
+			free(args);
 		return (0);
 	}
 	if (handle_builtins(args, env, line))
@@ -50,7 +51,7 @@ int main(int ac, char **av, char **env)
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "$ ", 2);
+			write(STDOUT_FILENO, "($) ", 4);
 		if (getline(&line, &n, stdin) == -1)
 			break;
 		line[strlen(line) - 1] = '\0';

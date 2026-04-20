@@ -13,6 +13,8 @@ char **split_string(char *str)
 	char **tmp = NULL;
 	int i = 0;
 
+	if (str == NULL || str[0] == '\0')
+		return (NULL);
 	token = strtok(str, " ");
 	while (token != NULL)
 	{
