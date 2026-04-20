@@ -77,8 +77,7 @@ void shell_loop(char **env)
 
 	while (getline(&line, &n, stdin) != -1)
 	{
-
-		if (line[0] != '\n')
+		if (line && strlen(line) > 0 && line[strlen(line) - 1] == '\n')
 			line[strlen(line) - 1] = '\0';
 
 		args = split_string(line);
