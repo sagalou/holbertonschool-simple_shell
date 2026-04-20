@@ -10,18 +10,33 @@ char **split_string(char *str)
 {
 	char *token = NULL; /* stores each word returned by strtok */
 	char **av = NULL;   /* array of strings to store all words */
+	char **tmp = NULL;
 	int i = 0;          /* counter to track number of words */
 
 	token = strtok(str, " "); /* first call: pass the string to split on spaces */
 	while (token != NULL)     /* loop until no more words */
 	{
-		av = realloc(av, (i + 1) * sizeof(char *)); /* resize av to add one slot */
-		av[i] = token; /* store current word in av */
-		i++;           /* move to next slot */
-		token = strtok(NULL, " "); /* next calls: pass NULL to continue splitting */
+		tmp = malloc((i + 2) * sizeof(char *)); /* resize av to add one slot */
+		if (tmp == NULL)
+			return (NULL);
+		if (av != NULL)
+		{
+			int j = 0;
+
+			while (j < i)
+			{
+				tmp[j] = av[j];
+				j++;
+			}
+			free(av);
+		}
+			av = tmp;
+			av[i] = token;
+			i++;
+			token = strtok(NULL, " ");
 	}
-	av = realloc(av, (i + 1) * sizeof(char *)); /* add NULL terminator slot */
-	av[i] = NULL;  /* NULL-terminate the array like argv */
+		if (av != NULL)
+			av[i] = NULL;
 	return (av);   /* return the array of words */
 }
 
