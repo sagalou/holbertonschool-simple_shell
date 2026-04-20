@@ -15,7 +15,6 @@ char *find_path(char *cmd, char **env);
 int main(int ac, char **av, char **env);
 
 /* --- shell.c ---*/
-char *_getenv(const char *name);
 void execute_cmd(char **argds, char **env);
 char **split_string(char *str);
 int handle_builtins(char **args, char **env, char *line);
