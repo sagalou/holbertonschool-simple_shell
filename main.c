@@ -46,10 +46,7 @@ int main(int ac, char **av, char **env)
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-		{
-			printf("$ ");
-			fflush(stdout);
-		}
+			write(STDOUT_FILENO, "$ ", 2);
 		if (getline(&line, &n, stdin) == -1)
 			break;
 		line[strlen(line) - 1] = '\0';
