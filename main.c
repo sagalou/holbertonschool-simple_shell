@@ -12,9 +12,10 @@
 static int process_line(char *line, char **env, char *shell_name, int cmd_num)
 {
 	char **args;
+	int last_status = 0;
 
 	if (line[0] == '\0')
-		return (1);
+		return (0);
 
 	args = split_string(line);
 	if (args[0] == NULL)
@@ -23,10 +24,10 @@ static int process_line(char *line, char **env, char *shell_name, int cmd_num)
 		return (1);
 	}
 	if (handle_builtins(args, env, line))
-		return (1);
-	execute_cmd(args, env, shell_name, cmd_num);
+		return (0);
+	last_status = execute_cmd(args, env, shell_name, cmd_num);
 	free(args);
-	return (1);
+	return (last_status);
 }
 
 /**
@@ -42,6 +43,7 @@ int main(int ac, char **av, char **env)
 	char *line = NULL;
 	size_t n = 0;
 	int cmd_num = 0;
+	int last_status = 0;
 
 	(void)ac;
 
@@ -53,8 +55,8 @@ int main(int ac, char **av, char **env)
 			break;
 		line[strlen(line) - 1] = '\0';
 		cmd_num++;
-		process_line(line, env, av[0], cmd_num);
+		last_status = process_line(line, env, av[0], cmd_num);
 	}
 	free(line);
-	return (0);
+	return (last_status);
 }

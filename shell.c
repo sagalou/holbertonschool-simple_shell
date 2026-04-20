@@ -34,14 +34,15 @@ char **split_string(char *str)
  *
  * Return: nothing
  */
-void execute_cmd(char **args, char **env, char *shell_name, int cmd_num)
+int execute_cmd(char **args, char **env, char *shell_name, int cmd_num)
 {
 	pid_t pid = fork();
+	int status = 0;
 
 	if (pid == -1)
 	{
 		perror("fork");
-		return;
+		return (1);
 	}
 	if (pid == 0)
 	{
@@ -50,7 +51,10 @@ void execute_cmd(char **args, char **env, char *shell_name, int cmd_num)
 			shell_name, cmd_num, args[0]);
 		exit(127);
 	}
-	wait(NULL);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
 }
 
 /**
