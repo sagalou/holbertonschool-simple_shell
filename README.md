@@ -28,11 +28,6 @@ A simple UNIX command line interpreter written in C, built as part of the Holber
 * 👨‍💻 [Authors](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%E2%80%8D-authors)
 * 👥 [Acknowledgements](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#-additionals)
 
-
-WIP
-
-* []()
-
 </details>
 
 ## 📟 Technologies used
@@ -44,6 +39,7 @@ WIP
 in both interactive and non-interactive mode.
 
 ## 🔄 Flowchart
+```text
 ┌─────────────────┐
 │      START      │
 └────────┬────────┘
@@ -51,7 +47,7 @@ in both interactive and non-interactive mode.
          ▼
 ┌─────────────────────┐
 │   Display prompt    │
-│       "$ "          │
+│        "$ "         │
 └────────┬────────────┘
          │
          ▼
@@ -61,10 +57,10 @@ in both interactive and non-interactive mode.
 └────────┬────────────┘
          │
          ▼
-    ◇─────────────◇
-   ◇   EOF ?       ◇──── yes ──→ ┌─────────┐
-    ◇─────────────◇              │  EXIT   │
-         │ no                     └─────────┘
+◇─────────────◇
+◇    EOF ?    ◇──── yes ──→ ┌─────────┐
+◇─────────────◇             │  EXIT   │
+         │ no                └─────────┘
          ▼
 ┌─────────────────────┐
 │   split_string()    │
@@ -72,40 +68,38 @@ in both interactive and non-interactive mode.
 └────────┬────────────┘
          │
          ▼
-    ◇──────────────────◇
-   ◇  av[0] == "exit" ? ◇── yes ──→ ┌─────────┐
-    ◇──────────────────◇            │  EXIT   │
-         │ no                        └─────────┘
+◇──────────────────────◇
+◇  av[0] == "exit" ?   ◇── yes ──→ ┌─────────┐
+◇──────────────────────◇           │  EXIT   │
+         │ no                       └─────────┘
          ▼
-    ◇─────────────────◇
-   ◇  av[0] == "env" ? ◇── yes ──→ ┌───────────────┐
-    ◇─────────────────◇            │ print environ │
-         │ no                       └───────────────┘
+◇─────────────────────◇
+◇  av[0] == "env" ?   ◇── yes ──→ ┌───────────────┐
+◇─────────────────────◇           │ print environ │
+         │ no                      └───────────────┘
+         ▼
+┌─────────────────────┐
+│     find_path()     │◄──────────────────┐
+│  stat() each dir    │                   │
+└────────┬────────────┘                   │
+         │                                │
          ▼                                │
-┌─────────────────────┐                   │
-│     find_path()     │◄──────────────────┘
-│  stat() each dir    │
-└────────┬────────────┘
-         │
-         ▼
-    ◇──────────────◇
-   ◇  cmd == NULL ? ◇── yes ──→ ┌──────────────┐
-    ◇──────────────◇            │ print error  │
-         │ no                    │  (no fork!)  │
-         ▼                       └──────┬───────┘
-┌──────────────────────────┐            │
-│ fork() + execve() + wait()│◄──────────┘
+◇──────────────◇                          │
+◇  cmd == NULL ? ◇── yes ──→ ┌──────────────┐
+◇──────────────◇             │ print error  │
+         │ no                 │  (no fork!)  │
+         ▼                    └──────┬───────┘
+┌──────────────────────────┐         │
+│ fork() +execve()+ wait() │   ◄─────┘
 └────────────┬─────────────┘
              │
-             └──────────────────────────┐
-                                        │
-             ┌──────────────────────────┘
              ▼
-      ↻ Back to the prompt
+      ↻ Back to prompt
+```
 
 ## 🖼️ Picture
 
-![Flowchart](https://github.com/sagalou/holbertonschool-simple_shell/blob/dev/flowchart.png?raw=true)
+![Flowchart](./flowchart.png)
 
 ---
 
@@ -163,23 +157,19 @@ $ echo "/bin/ls" | ./hsh
 
 ## 📘 Manual
 
-Missing features
+To view the manual page for `hsh`, first move the man file to the appropriate directory and use the `man` command:
 
-No pipes (ls | grep foo) — only one command at a time
-No redirections (>, <, >>, 2>)
-No command chaining (;, &&, ||)
-No quotes or escape characters ("hello world", \', \n)
-No variable expansion ($HOME, $?, $$)
-No wildcards / globbing (*.c, ?)
-No relative path execution (./script.sh) — only absolute paths or commands found via PATH
-No command history (up/down arrows)
-No tab-completion
-No shell script support (e.g. ./hsh script.sh)
+```bash
+sudo cp hsh.1 /usr/share/man/man1/
+sudo gzip /usr/share/man/man1/hsh.1
+man hsh
+```
 
-Missing builtins
+Alternatively, you can display it without installation using:
 
-No cd — cannot change directory
-exit does not accept an exit code (exit 1)
+```bash
+man ./hsh.1
+```
 
 ## ⚠️ Limitations
 
@@ -211,7 +201,7 @@ find_path allocates with strdup but cmd is never freed in the parent after wait
 
 
 ## 🧪 Valgrind
-
+```text
 ==2833== Memcheck, a memory error detector
 ==2833== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
 ==2833== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
@@ -269,7 +259,7 @@ $ exit
 ==2833== 
 ==2833== For lists of detected and suppressed errors, rerun with: -s
 ==2833== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-
+```
 ## ✨ Features
 
 - Display a prompt and wait for user input
