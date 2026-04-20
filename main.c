@@ -60,3 +60,39 @@ int main(int ac, char **av, char **env)
 	free(line);
 	return (last_status);
 }
+
+/**
+ * shell_loop - main loop of the shell
+ * @env: environment variables passed to execve
+ *
+ * Description:
+ * Reads a line of input, splits it into arguments, and processes
+ * the command. Continues until EOF (Ctrl+D) is encountered.
+ */
+void shell_loop(char **env)
+{
+	char *line = NULL;
+	size_t n = 0;
+	char **args;
+
+	while (getline(&line, &n, stdin) != -1)
+	{
+
+		if (line[0] != '\n')
+			line[strlen(line) - 1] = '\0';
+
+		args = split_string(line);
+
+		if (!args || !args[0])
+		{
+			free(args);
+			continue;
+		}
+
+		process_command(args, env, line);
+
+		free(args);
+	}
+
+	free(line);
+}

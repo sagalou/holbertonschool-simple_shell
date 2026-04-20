@@ -13,6 +13,8 @@ char *find_path(char *cmd, char **env);
 
 /* --- main.c ---*/
 int main(int ac, char **av, char **env);
+void shell_loop(char **env);
+void process_command(char **args, char **env, char *line);
 
 /* --- shell.c ---*/
 int execute_cmd(char **args, char **env, char *shell_name, int cmd_num);
@@ -22,5 +24,8 @@ int handle_builtins(char **args, char **env, char *line);
 /* --- builtins.c --- */
 void builtin_exit(void);
 void builtin_env(char **env);
+
+/* --- process.c --- */
+void process_command(char **args, char **env, char *line);
 
 #endif
