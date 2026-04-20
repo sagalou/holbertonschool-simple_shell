@@ -21,7 +21,7 @@ static int process_line(char *line, char **env, char *shell_name, int cmd_num)
 	if (args[0] == NULL)
 	{
 		free(args);
-		return (1);
+		return (0);
 	}
 	if (handle_builtins(args, env, line))
 		return (0);
