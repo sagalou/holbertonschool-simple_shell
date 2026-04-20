@@ -5,10 +5,11 @@
  * @line: the input line (already stripped of newline)
  * @env: environment variables passed to execve
  * @shell_name: name of the shell (argv[0])
+ * @cmd_num: command line count for error messages
  *
  * Return: 1 to continue the loop, 0 otherwise
  */
-static int process_line(char *line, char **env, char *shell_name)
+static int process_line(char *line, char **env, char *shell_name, int cmd_num)
 {
 	char **args;
 
@@ -23,7 +24,7 @@ static int process_line(char *line, char **env, char *shell_name)
 	}
 	if (handle_builtins(args, env, line))
 		return (1);
-	execute_cmd(args, env, shell_name);
+	execute_cmd(args, env, shell_name, cmd_num);
 	free(args);
 	return (1);
 }
@@ -40,6 +41,7 @@ int main(int ac, char **av, char **env)
 {
 	char *line = NULL;
 	size_t n = 0;
+	int cmd_num = 0;
 
 	(void)ac;
 
@@ -50,7 +52,8 @@ int main(int ac, char **av, char **env)
 		if (getline(&line, &n, stdin) == -1)
 			break;
 		line[strlen(line) - 1] = '\0';
-		process_line(line, env, av[0]);
+		cmd_num++;
+		process_line(line, env, av[0], cmd_num);
 	}
 	free(line);
 	return (0);

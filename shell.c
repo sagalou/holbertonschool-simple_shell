@@ -8,21 +8,21 @@
  */
 char **split_string(char *str)
 {
-	char *token = NULL; /* stores each word returned by strtok */
-	char **av = NULL;   /* array of strings to store all words */
-	int i = 0;          /* counter to track number of words */
+	char *token = NULL;
+	char **av = NULL;
+	int i = 0;
 
-	token = strtok(str, " "); /* first call: pass the string to split on spaces */
-	while (token != NULL)     /* loop until no more words */
+	token = strtok(str, " ");
+	while (token != NULL)
 	{
-		av = realloc(av, (i + 1) * sizeof(char *)); /* resize av to add one slot */
-		av[i] = token; /* store current word in av */
-		i++;           /* move to next slot */
-		token = strtok(NULL, " "); /* next calls: pass NULL to continue splitting */
+		av = realloc(av, (i + 1) * sizeof(char *));
+		av[i] = token;
+		i++;
+		token = strtok(NULL, " ");
 	}
-	av = realloc(av, (i + 1) * sizeof(char *)); /* add NULL terminator slot */
-	av[i] = NULL;  /* NULL-terminate the array like argv */
-	return (av);   /* return the array of words */
+	av = realloc(av, (i + 1) * sizeof(char *));
+	av[i] = NULL;
+	return (av);
 }
 
 /**
@@ -30,10 +30,11 @@ char **split_string(char *str)
  * @args: array of arguments (args[0] is the command name)
  * @env: environment variables passed to execve
  * @shell_name: name of the shell binary (argv[0])
+ * @cmd_num: command line count for error messages
  *
  * Return: nothing
  */
-void execute_cmd(char **args, char **env, char *shell_name)
+void execute_cmd(char **args, char **env, char *shell_name, int cmd_num)
 {
 	pid_t pid = fork();
 
@@ -45,9 +46,9 @@ void execute_cmd(char **args, char **env, char *shell_name)
 	if (pid == 0)
 	{
 		execve(args[0], args, env);
-		fprintf(stderr, "%s: %s: No such file or directory\n",
-			shell_name, args[0]);
-		exit(1);
+		fprintf(stderr, "%s: %d: %s: not found\n",
+			shell_name, cmd_num, args[0]);
+		exit(127);
 	}
 	wait(NULL);
 }
@@ -62,17 +63,17 @@ void execute_cmd(char **args, char **env, char *shell_name)
  */
 int handle_builtins(char **args, char **env, char *line)
 {
-	if (strcmp(args[0], "exit") == 0) /* check if command is "exit" */
+	if (strcmp(args[0], "exit") == 0)
 	{
-		free(args); /* free the arguments array before exiting */
-		free(line); /* free the input line buffer before exiting */
-		exit(0);    /* terminate the shell with success status */
+		free(args);
+		free(line);
+		exit(0);
 	}
-	if (strcmp(args[0], "env") == 0) /* check if command is "env" */
+	if (strcmp(args[0], "env") == 0)
 	{
-		builtin_env(env); /* print all environment variables */
-		free(args);       /* free args after execution */
-		return (1);       /* signal that a built-in was handled */
+		builtin_env(env);
+		free(args);
+		return (1);
 	}
-	return (0); /* no built-in matched, caller should fork and execute */
+	return (0);
 }
