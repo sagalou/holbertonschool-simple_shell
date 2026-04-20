@@ -20,16 +20,13 @@ A simple UNIX command line interpreter written in C, built as part of the Holber
 * ⚙️ [Installation](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#-description)
 * 🛠️ [Compilation](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%EF%B8%8F-compilation)
 * ▶️ [Usage](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%EF%B8%8F-usage)
-* 📘 [Manual]()
-* ⚠️ [Limitations]()
-* 🧪 [Valgrind]()
+* 📘 [Manual](https://github.com/sagalou/holbertonschool-simple_shell/blob/dev/README.md#-manual)
+* ⚠️ [Limitations](https://github.com/sagalou/holbertonschool-simple_shell/blob/dev/README.md#%EF%B8%8F-limitations)
+* 🧪 [Valgrind](https://github.com/sagalou/holbertonschool-simple_shell/blob/dev/README.md#-valgrind)
 * ✨ [Features](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#features)
 * 🗂️ [Project Structure](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%EF%B8%8F-project-structure)
 * 👨‍💻 [Authors](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%E2%80%8D-authors)
 * 👥 [Acknowledgements](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#-additionals)
-
-
-WIP
 
 * []()
 
@@ -106,7 +103,7 @@ in both interactive and non-interactive mode.
 </pre>
 ## 🖼️ Picture
 
-![Flowchart](https://github.com/sagalou/holbertonschool-simple_shell/blob/dev/flowchart.png?raw=true)
+![Flowchart](./flowchart.png)
 
 ---
 
