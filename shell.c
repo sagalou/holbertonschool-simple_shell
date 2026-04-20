@@ -34,30 +34,20 @@ char **split_string(char *str)
  */
 void execute_cmd(char **args, char **env)
 {
-	char *cmd = find_path(args[0], env);
-	pid_t pid;
+	pid_t pid = fork();
 
-	if (cmd == NULL)
-	{
-		fprintf(stderr, "%s: command not found\n", args[0]);
-		return;
-	}
-	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork");
-		free(cmd);
 		return;
 	}
-	if (pid == 0) /* child: replace with the command */
+	if (pid == 0)
 	{
-		execve(cmd, args, env);
-		perror(cmd);
-		free(cmd);
+		execve(args[0], args, env);
+		perror(args[0]);
 		exit(1);
 	}
-	wait(NULL); /* parent: wait for child to finish */
-	free(cmd);
+	wait(NULL);
 }
 
 /**
