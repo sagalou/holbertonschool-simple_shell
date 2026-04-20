@@ -8,13 +8,15 @@
  */
 char **split_string(char *str)
 {
-	char *token = NULL; /* stores each word returned by strtok */
-	char **av = NULL;   /* array of strings to store all words */
+	char *token = NULL;
+	char **av = NULL;
 	char **tmp = NULL;
-	int i = 0;          /* counter to track number of words */
+	int i = 0;
 
-	token = strtok(str, " "); /* first call: pass the string to split on spaces */
-	while (token != NULL)     /* loop until no more words */
+	if (str == NULL || str[0] == '\0')
+		return (NULL);
+	token = strtok(str, " ");
+	while (token != NULL)
 	{
 		tmp = malloc((i + 2) * sizeof(char *)); /* resize av to add one slot */
 		if (tmp == NULL)
@@ -30,49 +32,56 @@ char **split_string(char *str)
 			}
 			free(av);
 		}
-			av = tmp;
-			av[i] = token;
-			i++;
-			token = strtok(NULL, " ");
+		av = tmp;
+		av[i] = token;
+		i++;
+		token = strtok(NULL, " ");
 	}
-		if (av != NULL)
-			av[i] = NULL;
-	return (av);   /* return the array of words */
+	if (av != NULL)
+		av[i] = NULL;
+	return (av);
 }
 
 /**
  * execute_cmd - executes a command in the child process
  * @args: array of arguments (args[0] is the command name)
  * @env: environment variables passed to execve
+ * @shell_name: name of the shell binary (argv[0])
+ * @cmd_num: command line count for error messages
  *
  * Return: nothing
  */
-void execute_cmd(char **args, char **env)
+int execute_cmd(char **args, char **env, char *shell_name, int cmd_num)
 {
-	char *cmd = find_path(args[0], env);
 	pid_t pid;
+	char *cmd;
 
+	cmd = find_path(args[0], env);
 	if (cmd == NULL)
 	{
-		fprintf(stderr, "%s: command not found\n", args[0]);
-		return;
+		fprintf(stderr, "%s: %d: %s: not found\n",
+			shell_name, cmd_num, args[0]);
+		free(args);
+		return (127);
 	}
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork");
 		free(cmd);
-		return;
+		return (1);
 	}
-	if (pid == 0) /* child: replace with the command */
+	if (pid == 0)
 	{
 		execve(cmd, args, env);
 		perror(cmd);
 		free(cmd);
+		free(args);
 		exit(1);
 	}
-	wait(NULL); /* parent: wait for child to finish */
+	wait(NULL);
 	free(cmd);
+	return (0);
 }
 
 /**
@@ -85,17 +94,17 @@ void execute_cmd(char **args, char **env)
  */
 int handle_builtins(char **args, char **env, char *line)
 {
-	if (strcmp(args[0], "exit") == 0) /* check if command is "exit" */
+	if (strcmp(args[0], "exit") == 0)
 	{
-		free(args); /* free the arguments array before exiting */
-		free(line); /* free the input line buffer before exiting */
-		exit(0);    /* terminate the shell with success status */
+		free(args);
+		free(line);
+		exit(0);
 	}
-	if (strcmp(args[0], "env") == 0) /* check if command is "env" */
+	if (strcmp(args[0], "env") == 0)
 	{
-		builtin_env(env); /* print all environment variables */
-		free(args);       /* free args after execution */
-		return (1);       /* signal that a built-in was handled */
+		builtin_env(env);
+		free(args);
+		return (1);
 	}
-	return (0); /* no built-in matched, caller should fork and execute */
+	return (0);
 }

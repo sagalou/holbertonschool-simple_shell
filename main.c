@@ -1,55 +1,63 @@
 #include "main.h"
 
 /**
+ * process_line - parses and executes a single input line
+ * @line: the input line (already stripped of newline)
+ * @env: environment variables passed to execve
+ * @shell_name: name of the shell (argv[0])
+ * @cmd_num: command line count for error messages
+ *
+ * Return: 1 to continue the loop, 0 otherwise
+ */
+static int process_line(char *line, char **env, char *shell_name, int cmd_num)
+{
+	char **args;
+	int last_status = 0;
+
+	if (line[0] == '\0')
+		return (0);
+
+	args = split_string(line);
+	if (args == NULL || args[0] == NULL)
+	{
+		if (args != NULL)
+			free(args);
+		return (0);
+	}
+	if (handle_builtins(args, env, line))
+		return (0);
+	last_status = execute_cmd(args, env, shell_name, cmd_num);
+	free(args);
+	return (last_status);
+}
+
+/**
  * main - Entry point of the simple shell
  * @ac: argument count (unused)
- * @av: argument vector (unused)
+ * @av: argument vector
  * @env: environment variables passed to execve
  *
  * Return: 0 on success
  */
 int main(int ac, char **av, char **env)
 {
-	char *line = NULL;      /* Buffer dynamically allocated by getline */
-	size_t n = 0;           /* Buffer size, automatically managed by getline */
-	char **args;            /* Array of tokens produced by splitting the line */
+	char *line = NULL;
+	size_t n = 0;
+	int cmd_num = 0;
+	int last_status = 0;
 
-	(void)ac;               /* Unused parameters, silences compiler warnings */
-	(void)av;
+	(void)ac;
 
-	/* Main loop: print prompt, read a line, process it */
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-			printf("$ ");
-
+			write(STDOUT_FILENO, "($) ", 4);
 		if (getline(&line, &n, stdin) == -1)
 			break;
-
-		/* Replace the trailing '\n' with '\0' to get a clean string */
 		line[strlen(line) - 1] = '\0';
-
-		/* Empty line or whitespace-only: loop back to prompt */
-		if (line[0] == '\0')
-			continue;
-
-		/* Split the line into tokens separated by whitespace */
-		args = split_string(line);
-
-		if (args[0] == NULL)
-		{
-			free(args);
-			continue;
-		}
-
-		/* Check if the command is a builtin (exit, env, cd) and run it */
-		if (handle_builtins(args, env, line))
-			continue;
-
-		/* External command: fork + execve, then free the token array */
-		execute_cmd(args, env);
-		free(args);
+		cmd_num++;
+		last_status = process_line(line, env, av[0], cmd_num);
 	}
-	free(line); /* Release the buffer allocated by getline before exiting */
-	return (0);
+	free(line);
+	return (last_status);
 }
