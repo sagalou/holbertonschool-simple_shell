@@ -4,10 +4,11 @@
  * process_line - parses and executes a single input line
  * @line: the input line (already stripped of newline)
  * @env: environment variables passed to execve
+ * @shell_name: name of the shell (argv[0])
  *
  * Return: 1 to continue the loop, 0 otherwise
  */
-static int process_line(char *line, char **env)
+static int process_line(char *line, char **env, char *shell_name)
 {
 	char **args;
 
@@ -22,7 +23,7 @@ static int process_line(char *line, char **env)
 	}
 	if (handle_builtins(args, env, line))
 		return (1);
-	execute_cmd(args, env);
+	execute_cmd(args, env, shell_name);
 	free(args);
 	return (1);
 }
@@ -30,7 +31,7 @@ static int process_line(char *line, char **env)
 /**
  * main - Entry point of the simple shell
  * @ac: argument count (unused)
- * @av: argument vector (unused)
+ * @av: argument vector
  * @env: environment variables passed to execve
  *
  * Return: 0 on success
@@ -41,7 +42,6 @@ int main(int ac, char **av, char **env)
 	size_t n = 0;
 
 	(void)ac;
-	(void)av;
 
 	while (1)
 	{
@@ -50,7 +50,7 @@ int main(int ac, char **av, char **env)
 		if (getline(&line, &n, stdin) == -1)
 			break;
 		line[strlen(line) - 1] = '\0';
-		process_line(line, env);
+		process_line(line, env, av[0]);
 	}
 	free(line);
 	return (0);

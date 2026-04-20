@@ -29,10 +29,11 @@ char **split_string(char *str)
  * execute_cmd - executes a command in the child process
  * @args: array of arguments (args[0] is the command name)
  * @env: environment variables passed to execve
+ * @shell_name: name of the shell binary (argv[0])
  *
  * Return: nothing
  */
-void execute_cmd(char **args, char **env)
+void execute_cmd(char **args, char **env, char *shell_name)
 {
 	pid_t pid = fork();
 
@@ -44,7 +45,8 @@ void execute_cmd(char **args, char **env)
 	if (pid == 0)
 	{
 		execve(args[0], args, env);
-		perror(args[0]);
+		fprintf(stderr, "%s: %s: No such file or directory\n",
+			shell_name, args[0]);
 		exit(1);
 	}
 	wait(NULL);
