@@ -8,7 +8,6 @@
  */
 char **split_string(char *str)
 {
-<<<<<<< HEAD
 	char *token = NULL;
 	char **av = NULL;
 	char **tmp = NULL;
