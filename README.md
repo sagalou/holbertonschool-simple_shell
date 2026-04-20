@@ -106,7 +106,7 @@ in both interactive and non-interactive mode.
 </pre>
 ## 🖼️ Picture
 
-![Description]()
+![Flowchart](https://github.com/sagalou/holbertonschool-simple_shell/blob/dev/flowchart.png?raw=true)
 
 ---
 
@@ -212,7 +212,7 @@ find_path allocates with strdup but cmd is never freed in the parent after wait
 
 
 ## 🧪 Valgrind
-
+```text
 ==2833== Memcheck, a memory error detector
 ==2833== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
 ==2833== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
