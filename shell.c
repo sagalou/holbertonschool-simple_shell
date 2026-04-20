@@ -8,6 +8,7 @@
  */
 char **split_string(char *str)
 {
+<<<<<<< HEAD
 	char *token = NULL;
 	char **av = NULL;
 	char **tmp = NULL;
@@ -16,7 +17,7 @@ char **split_string(char *str)
 	token = strtok(str, " ");
 	while (token != NULL)
 	{
-		tmp = malloc((i + 2) * sizeof(char *));
+		tmp = malloc((i + 2) * sizeof(char *)); /* resize av to add one slot */
 		if (tmp == NULL)
 			return (NULL);
 		if (av != NULL)
