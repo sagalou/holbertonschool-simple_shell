@@ -28,7 +28,6 @@ A simple UNIX command line interpreter written in C, built as part of the Holber
 * 👨‍💻 [Authors](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%E2%80%8D-authors)
 * 👥 [Acknowledgements](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#-additionals)
 
-
 </details>
 
 ## 📟 Technologies used
@@ -100,7 +99,7 @@ in both interactive and non-interactive mode.
 
 ## 🖼️ Picture
 
-![Flowchart](./flowchart.png)
+![Flowchart](https://i.imgur.com/dMKaWHh.png)
 
 ---
 
