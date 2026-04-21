@@ -12,8 +12,9 @@ void builtin_env(char **env)
 
 	while (env[i] != NULL) /* loop until we reach the end of the array */
 	{
-		printf("%s\n", env[i]); /* print each variable ex: PATH=/usr/bin:/bin */
-		i++; /* move to the next variable */
+		write(STDOUT_FILENO, env[i], strlen(env[i]));
+        write(STDOUT_FILENO, "\n", 1);
+		i++;
 	}
 }
 
