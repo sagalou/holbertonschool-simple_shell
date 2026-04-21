@@ -107,7 +107,7 @@ int handle_builtins(char **args, char **env, char *line)
 	if (strcmp(args[0], "exit") == 0)
 	{
 		free(line);
-		exit(0);
+		exit(EXIT_FAILURE);
 	}
 
 	if (strcmp(args[0], "env") == 0)
