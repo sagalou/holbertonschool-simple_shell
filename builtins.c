@@ -8,12 +8,12 @@
  */
 void builtin_env(char **env)
 {
-	int i = 0; /* counter to go through each environment variable */
+	int i = 0; /* index pour parcourir le tableau d'environnement */
 
-	while (env[i] != NULL) /* loop until we reach the end of the array */
+	while (env[i] != NULL) /* chaque entrée est du type "CLE=valeur" */
 	{
-		write(STDOUT_FILENO, env[i], strlen(env[i]));
-        write(STDOUT_FILENO, "\n", 1);
+		write(STDOUT_FILENO, env[i], strlen(env[i])); /* affiche la variable */
+		write(STDOUT_FILENO, "\n", 1);                /* saut de ligne après chaque entrée */
 		i++;
 	}
 }
@@ -25,5 +25,5 @@ void builtin_env(char **env)
  */
 void builtin_exit(void)
 {
-	exit(0); /* terminate the shell with status 0 (success) */
+	exit(0); /* quitte le shell avec le code 0 (succès) */
 }
