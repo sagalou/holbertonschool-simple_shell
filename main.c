@@ -11,7 +11,7 @@
 static int process_line(char *line, char **env, char *shell_name, int cmd_num)
 {
 	char **args;
-	int status = 0;
+	static int status;
 
 	if (!line || line[0] == '\0')
 		return (0);
@@ -23,7 +23,7 @@ static int process_line(char *line, char **env, char *shell_name, int cmd_num)
 		return (0);
 	}
 
-	if (handle_builtins(args, env, line))
+	if (handle_builtins(args, env, line, status))
 	{
 		free(args);
 		return (0);

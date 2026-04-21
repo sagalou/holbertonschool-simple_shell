@@ -19,7 +19,7 @@ void process_command(char **args, char **env, char *line);
 /* --- shell.c ---*/
 int execute_cmd(char **args, char **env, char *shell_name, int cmd_num);
 char **split_string(char *str);
-int handle_builtins(char **args, char **env, char *line);
+int handle_builtins(char **args, char **env, char *line, int status);
 
 /* --- builtins.c --- */
 void builtin_exit(void);

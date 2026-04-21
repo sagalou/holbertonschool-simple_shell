@@ -103,10 +103,11 @@ int execute_cmd(char **args, char **env, char *shell_name, int cmd_num)
  * @args: array of arguments
  * @env: environment variables
  * @line: input line buffer
+ * @status: exit code of the last command
  *
  * Return: 1 if built-in was executed, 0 otherwise
  */
-int handle_builtins(char **args, char **env, char *line)
+int handle_builtins(char **args, char **env, char *line, int status)
 {
 	if (args == NULL || args[0] == NULL)
 		return (0);
@@ -115,7 +116,7 @@ int handle_builtins(char **args, char **env, char *line)
 	{
 		free(line);
 		free(args);
-		exit(0);
+		exit(status);
 	}
 
 	if (strcmp(args[0], "env") == 0)
