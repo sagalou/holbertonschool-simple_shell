@@ -175,100 +175,110 @@ man ./hsh.1
 
 Missing features
 
-Command Arguments: Complex tabulation handling and advanced whitespace delimiters are not yet fully implemented.
-Logical Operators: Support for command chaining using && and || logic is missing.
-Variable Replacement: Does not currently handle shell variable expansion such as $? or $$.
-Comments Support: The shell does not ignore text following the # character.
-Command Separators: Ability to execute multiple commands separated by ; is not yet supported.
-Script Execution: The shell cannot currently process a file passed as a command-line argument.
+Command Arguments: Complex tabulation handling and advanced whitespace delimiters are not yet fully implemented.  
+Logical Operators: Support for command chaining using && and || logic is missing.  
+Variable Replacement: Does not currently handle shell variable expansion such as $? or $$.  
+Comments Support: The shell does not ignore text following the # character.  
+Command Separators: Ability to execute multiple commands separated by ; is not yet supported.  
+Script Execution: The shell cannot currently process a file passed as a command-line argument.  
 
 Missing builtins
 
-cd: Missing the ability to change the current working directory using the chdir system call.
-setenv: Missing the functionality to add or modify environment variables.
-unsetenv: Missing the capability to remove an existing environment variable.
-exit [status]: While shell handles exit, it currently lacks the feature to accept a numeric argument to return a specific exit status.
-alias: Missing the system to define or display command aliases.
-help: Missing an internal command to provide documentation for the shell's built-in functions.
+cd: Missing the ability to change the current working directory using the chdir system call.  
+setenv: Missing the functionality to add or modify environment variables.  
+unsetenv: Missing the capability to remove an existing environment variable.  
+exit [status]: While shell handles exit, it currently lacks the feature to accept a numeric argument to return a specific exit status.  
+alias: Missing the system to define or display command aliases.  
+help: Missing an internal command to provide documentation for the shell's built-in functions.  
 
 Robustness
 
-No handling of very long lines
-split_string does not handle multiple spaces or tabs between words
-No SIGINT handling (Ctrl+C) — the shell inherits default behavior from the child process
-find_path allocates with strdup but cmd is never freed in the parent after wait
+No handling of very long lines  
+split_string does not handle multiple spaces or tabs between words  
+No SIGINT handling (Ctrl+C) — the shell inherits default behavior from the child process  
+find_path allocates with strdup but cmd is never freed in the parent after wait  
 
 
 
 ## 🧪 Valgrind
 ```text
-==2833== Memcheck, a memory error detector
-==2833== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==2833== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==2833== Command: ./hsh
-==2833== 
-$ ls
-AUTHORS  README.md  builtins.c  env.c  find_path.c  flowchart.md  flowchart.png  hsh  main.c  main.h  man_1_simple_shell  shell.c
-$ pwd
-/home/kevin/projets/holberton/holbertonschool-simple_shell
-$ env
-PYTHON_BASIC_REPL=1
-LESSOPEN=| /usr/bin/lesspipe %s
-USER=kevin
-GIT_ASKPASS=/home/kevin/.vscode-server/bin/560a9dba96f961efea7b1612916f89e5d5d4d679/extensions/git/dist/askpass.sh
-SHLVL=1
-LD_LIBRARY_PATH=/usr/lib/debug
-HOME=/home/kevin
-TERM_PROGRAM_VERSION=1.116.0
-VSCODE_IPC_HOOK_CLI=/run/user/1000/vscode-ipc-d77fbc42-c65d-40bf-b7c6-5982638d1bfb.sock
-VSCODE_GIT_ASKPASS_MAIN=/home/kevin/.vscode-server/bin/560a9dba96f961efea7b1612916f89e5d5d4d679/extensions/git/dist/askpass-main.js
-PS1=\[\](.venv) \[\]\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ \[\]\[\]
-VSCODE_GIT_ASKPASS_NODE=/home/kevin/.vscode-server/bin/560a9dba96f961efea7b1612916f89e5d5d4d679/node
-PYDEVD_DISABLE_FILE_VALIDATION=1
-BUNDLED_DEBUGPY_PATH=/home/kevin/.vscode-server/extensions/ms-python.debugpy-2025.18.0-linux-x64/bundled/libs/debugpy
-VSCODE_PYTHON_AUTOACTIVATE_GUARD=1
-DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
-COLORTERM=truecolor
-WSL_DISTRO_NAME=Ubuntu
-DEBUGINFOD_URLS=https://debuginfod.ubuntu.com 
-WAYLAND_DISPLAY=wayland-0
-LOGNAME=kevin
-...
-$ exit
-==2833== 
-==2833== HEAP SUMMARY:
-==2833==     in use at exit: 136 bytes in 2 blocks
-==2833==   total heap usage: 11 allocs, 9 frees, 2,264 bytes allocated
-==2833== 
-==2833== 16 bytes in 1 blocks are still reachable in loss record 1 of 2
-==2833==    at 0x484DB80: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2833==    by 0x10995C: split_string (in /home/kevin/projets/holberton/holbertonschool-simple_shell/hsh)
-==2833==    by 0x1096FD: main (in /home/kevin/projets/holberton/holbertonschool-simple_shell/hsh)
-==2833== 
-==2833== 120 bytes in 1 blocks are still reachable in loss record 2 of 2
-==2833==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2833==    by 0x48E6D84: getdelim (iogetdelim.c:65)
-==2833==    by 0x109864: main (in /home/kevin/projets/holberton/holbertonschool-simple_shell/hsh)
-==2833== 
-==2833== LEAK SUMMARY:
-==2833==    definitely lost: 0 bytes in 0 blocks
-==2833==    indirectly lost: 0 bytes in 0 blocks
-==2833==      possibly lost: 0 bytes in 0 blocks
-==2833==    still reachable: 136 bytes in 2 blocks
-==2833==         suppressed: 0 bytes in 0 blocks
-==2833== 
-==2833== For lists of detected and suppressed errors, rerun with: -s
-==2833== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+(.venv) kevin@splint:~/projets/holberton/holbertonschool-simple_shell$ valgrind --leak-check=full --show-leak-kinds=all ./hsh
+==3810== Memcheck, a memory error detector
+==3810== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==3810== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==3810== Command: ./hsh
+==3810== 
+($) ls
+AUTHORS  README.md  builtins.c  find_path.c  flowchart.md  flowchart.png  hsh  main.c  main.h  man_1_simple_shell  process_command.c  resolve_command.c  shell.c
+($) ls -l
+total 120
+-rw-r--r-- 1 kevin kevin   107 Apr 20 20:35 AUTHORS
+-rw-r--r-- 1 kevin kevin 13450 Apr 21 18:56 README.md
+-rw-r--r-- 1 kevin kevin   560 Apr 21 18:50 builtins.c
+-rw-r--r-- 1 kevin kevin  1277 Apr 21 18:50 find_path.c
+-rw-r--r-- 1 kevin kevin   473 Apr 20 21:43 flowchart.md
+-rw-r--r-- 1 kevin kevin 40246 Apr 20 21:45 flowchart.png
+-rwxr-xr-x 1 kevin kevin 21680 Apr 21 18:55 hsh
+-rw-r--r-- 1 kevin kevin  1280 Apr 21 18:50 main.c
+-rw-r--r-- 1 kevin kevin   741 Apr 21 18:50 main.h
+-rw-r--r-- 1 kevin kevin  1046 Apr 21 18:58 man_1_simple_shell
+-rw-r--r-- 1 kevin kevin   599 Apr 21 18:50 process_command.c
+-rw-r--r-- 1 kevin kevin   878 Apr 21 18:50 resolve_command.c
+-rw-r--r-- 1 kevin kevin  2036 Apr 21 18:50 shell.c
+($) ls -l /tmp
+total 40
+drwx------ 2 kevin kevin 4096 Apr 21 18:49  mcp-sU0NcM
+drwx------ 2 kevin kevin 4096 Apr 21 18:50  pyright-976-R1yi1p0X6qZY
+drwxr-xr-x 3 kevin kevin 4096 Apr 21 18:50  python-languageserver-cancellation
+drwx------ 2 root  root  4096 Apr 21 18:49  snap-private-tmp
+drwx------ 3 root  root  4096 Apr 21 18:49  systemd-private-e6a0a62332a742ea8950b993c1255e8b-systemd-logind.service-i3ebVp
+drwx------ 3 root  root  4096 Apr 21 18:49  systemd-private-e6a0a62332a742ea8950b993c1255e8b-systemd-resolved.service-pxoqSp
+drwx------ 3 root  root  4096 Apr 21 18:49  systemd-private-e6a0a62332a742ea8950b993c1255e8b-systemd-timesyncd.service-jGRPFF
+drwx------ 3 root  root  4096 Apr 21 18:49  systemd-private-e6a0a62332a742ea8950b993c1255e8b-wsl-pro.service-eyJ44I
+prw------- 1 kevin kevin    0 Apr 21 18:58 'vgdb-pipe-from-vgdb-to-3810-by-kevin-on-???'
+-rw------- 1 kevin kevin   48 Apr 21 18:58 'vgdb-pipe-shared-mem-vgdb-3810-by-kevin-on-???'
+prw------- 1 kevin kevin    0 Apr 21 18:58 'vgdb-pipe-to-vgdb-from-3810-by-kevin-on-???'
+drwxr-xr-x 2 kevin kevin 4096 Apr 21 18:50  {C1724EE2-8359-4E4A-9FD6-E2CBCD67EC94}
+($) /bin/ls
+AUTHORS  README.md  builtins.c  find_path.c  flowchart.md  flowchart.png  hsh  main.c  main.h  man_1_simple_shell  process_command.c  resolve_command.c  shell.c
+($) hugolegoat
+./hsh: 5: hugolegoat: not found
+($) ls     -l
+total 120
+-rw-r--r-- 1 kevin kevin   107 Apr 20 20:35 AUTHORS
+-rw-r--r-- 1 kevin kevin 13450 Apr 21 18:56 README.md
+-rw-r--r-- 1 kevin kevin   560 Apr 21 18:50 builtins.c
+-rw-r--r-- 1 kevin kevin  1277 Apr 21 18:50 find_path.c
+-rw-r--r-- 1 kevin kevin   473 Apr 20 21:43 flowchart.md
+-rw-r--r-- 1 kevin kevin 40246 Apr 20 21:45 flowchart.png
+-rwxr-xr-x 1 kevin kevin 21680 Apr 21 18:55 hsh
+-rw-r--r-- 1 kevin kevin  1280 Apr 21 18:50 main.c
+-rw-r--r-- 1 kevin kevin   741 Apr 21 18:50 main.h
+-rw-r--r-- 1 kevin kevin  1046 Apr 21 18:58 man_1_simple_shell
+-rw-r--r-- 1 kevin kevin   599 Apr 21 18:50 process_command.c
+-rw-r--r-- 1 kevin kevin   878 Apr 21 18:50 resolve_command.c
+-rw-r--r-- 1 kevin kevin  2036 Apr 21 18:50 shell.c
+($) 
+($) exit
+==3810== 
+==3810== HEAP SUMMARY:
+==3810==     in use at exit: 0 bytes in 0 blocks
+==3810==   total heap usage: 23 allocs, 23 frees, 8,301 bytes allocated
+==3810== 
+==3810== All heap blocks were freed -- no leaks are possible
+==3810== 
+==3810== For lists of detected and suppressed errors, rerun with: -s
+==3810== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 ```
 ## ✨ Features
 
 - Display a prompt and wait for user input
-Interactive and Non-Interactive Modes: Supports manual command entry and piped input.
-Command Execution: Finds and runs executable programs using the PATH.
-Path Resolution: Correctly handles both absolute paths (e.g., /bin/ls) and relative command names (e.g., ls).
-Built-in Commands: Includes native support for exit (to close the shell) and env (to display environment variables).
-Robust Error Handling: Displays system-specific error messages and returns correct status codes (like 127 for command not found).
-Memory Efficiency: Designed to free all allocated memory before exiting to ensure no leaks.
+Interactive and Non-Interactive Modes: Supports manual command entry and piped input.  
+Command Execution: Finds and runs executable programs using the PATH.  
+Path Resolution: Correctly handles both absolute paths (e.g., /bin/ls) and relative command names (e.g., ls).  
+Built-in Commands: Includes native support for exit (to close the shell) and env (to display environment variables).  
+Robust Error Handling: Displays system-specific error messages and returns correct status codes (like 127 for command not found).  
+Memory Efficiency: Designed to free all allocated memory before exiting to ensure no leaks.  
 
 ## 🗂️ Project Structure
 
