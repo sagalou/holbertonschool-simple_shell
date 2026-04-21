@@ -13,20 +13,20 @@ A simple UNIX command line interpreter written in C, built as part of the Holber
 
 <br>
 
-* 📟 [Technologies used](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#technologies-used)
-* 📖 [Description](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#-description)
-* 🔄 [Flowchart](https://github.com/sagalou/holbertonschool-simple_shell/blob/dev/flowchart.md)
-* 🔧 [Prerequisites](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#prerequisites)
-* ⚙️ [Installation](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#-description)
-* 🛠️ [Compilation](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%EF%B8%8F-compilation)
-* ▶️ [Usage](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%EF%B8%8F-usage)
-* 📘 [Manual](https://github.com/sagalou/holbertonschool-simple_shell/blob/dev/README.md#-manual)
-* ⚠️ [Limitations](https://github.com/sagalou/holbertonschool-simple_shell/blob/dev/README.md#%EF%B8%8F-limitations)
-* 🧪 [Valgrind](https://github.com/sagalou/holbertonschool-simple_shell/blob/dev/README.md#-valgrind)
-* ✨ [Features](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#features)
-* 🗂️ [Project Structure](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%EF%B8%8F-project-structure)
-* 👨‍💻 [Authors](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#%E2%80%8D-authors)
-* 👥 [Acknowledgements](https://github.com/sagalou/holbertonschool-simple_shell/tree/dev?tab=readme-ov-file#-additionals)
+* 📟 [Technologies used](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#-technologies-used)
+* 📖 [Description](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#-description)
+* 🔄 [Flowchart](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#-flowchart)
+* 🔧 [Prerequisites](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#-prerequisites)
+* ⚙️ [Installation](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#%EF%B8%8F-installation)
+* 🛠️ [Compilation](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#%EF%B8%8F-compilation)
+* ▶️ [Usage](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#%EF%B8%8F-usage)
+* 📘 [Manual](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#-manual)
+* ⚠️ [Limitations](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#%EF%B8%8F-limitations)
+* 🧪 [Valgrind](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#-valgrind)
+* ✨ [Features](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#-features)
+* 🗂️ [Project Structure](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#%EF%B8%8F-project-structure)
+* 👨‍💻 [Authors](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#%E2%80%8D-authors)
+* 👥 [Acknowledgements](https://github.com/sagalou/holbertonschool-simple_shell/blob/main/README.md#-acknowledgements)
 
 </details>
 
@@ -175,21 +175,21 @@ man ./hsh.1
 
 Missing features
 
-No pipes (ls | grep foo) — only one command at a time
-No redirections (>, <, >>, 2>)
-No command chaining (;, &&, ||)
-No variable expansion ($HOME, $?, $$)
-No relative path execution (./script.sh) — only absolute paths or commands found via PATH
-No command history (up/down arrows)
-No shell script support (e.g. ./hsh script.sh)
+Command Arguments: Complex tabulation handling and advanced whitespace delimiters are not yet fully implemented.
+Logical Operators: Support for command chaining using && and || logic is missing.
+Variable Replacement: Does not currently handle shell variable expansion such as $? or $$.
+Comments Support: The shell does not ignore text following the # character.
+Command Separators: Ability to execute multiple commands separated by ; is not yet supported.
+Script Execution: The shell cannot currently process a file passed as a command-line argument.
 
 Missing builtins
 
-No cd — cannot change directory
-No pwd
-No echo
-No export / unset to modify the environment
-exit does not accept an exit code (exit 1)
+cd: Missing the ability to change the current working directory using the chdir system call.
+setenv: Missing the functionality to add or modify environment variables.
+unsetenv: Missing the capability to remove an existing environment variable.
+exit [status]: While shell handles exit, it currently lacks the feature to accept a numeric argument to return a specific exit status.
+alias: Missing the system to define or display command aliases.
+help: Missing an internal command to provide documentation for the shell's built-in functions.
 
 Robustness
 
@@ -263,19 +263,24 @@ $ exit
 ## ✨ Features
 
 - Display a prompt and wait for user input
-- Execute commands with their full path (`/bin/ls`)
-- Handle errors the same way as `/bin/sh`
-- Support end-of-file (Ctrl+D)
+Interactive and Non-Interactive Modes: Supports manual command entry and piped input.
+Command Execution: Finds and runs executable programs using the PATH.
+Path Resolution: Correctly handles both absolute paths (e.g., /bin/ls) and relative command names (e.g., ls).
+Built-in Commands: Includes native support for exit (to close the shell) and env (to display environment variables).
+Robust Error Handling: Displays system-specific error messages and returns correct status codes (like 127 for command not found).
+Memory Efficiency: Designed to free all allocated memory before exiting to ensure no leaks.
 
 ## 🗂️ Project Structure
 
 | File | Description |
 |---|---|
-| `main.c` | Entry point |
-| `Builtins` | Built-in commands |
+| `main.c` | Entry point|
+| `Builtins.c` | Built-in commands|
 | `main.h` | Core headers|
 | `shell.c` | Command handling|
-| `find_path.c` | Path resolution |
+| `find_path.c` | Path resolution|
+| `process_command.c` |Command execution logic|
+| `resolve_command.c` |Alternative PATH resolution|
 
 ## 👨‍💻 Authors
 
