@@ -38,9 +38,18 @@ static char *search_dirs(char *path_val, char *cmd)
  *
  * Return: full path string or NULL if not found
  */
+
 char *find_path(char *cmd, char **env)
 {
 	int i = 0;
+	struct stat st;
+
+	if (strchr(cmd, '/'))
+	{
+		if (stat(cmd, &st) == 0)
+			return (strdup(cmd));
+		return (NULL);
+	}
 
 	while (env[i] != NULL)
 	{
