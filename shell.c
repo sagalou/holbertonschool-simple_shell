@@ -16,6 +16,7 @@ char **split_string(char *str)
 
 	if (str == NULL || str[0] == '\0')
 		return (NULL);
+
 	token = strtok(str, " ");
 	while (token != NULL)
 	{
@@ -80,17 +81,20 @@ int execute_cmd(char **args, char **env, char *shell_name, int cmd_num)
 
 	if (pid == 0)
 	{
-		execve(cmd, args, env);
-		perror(cmd);
-		free(cmd);
-		exit(1);
+		if (execve(cmd, args, env) == -1)
+		{
+			perror(args[0]);
+			free(cmd);
+			exit(127);
+		}
 	}
 	else
 	{
 		wait(&status);
+		free(cmd);
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
 	}
-
-	free(cmd);
 	return (0);
 }
 
@@ -104,10 +108,14 @@ int execute_cmd(char **args, char **env, char *shell_name, int cmd_num)
  */
 int handle_builtins(char **args, char **env, char *line)
 {
+	if (args == NULL || args[0] == NULL)
+		return (0);
+
 	if (strcmp(args[0], "exit") == 0)
 	{
 		free(line);
-		exit(EXIT_FAILURE);
+		free(args);
+		exit(0);
 	}
 
 	if (strcmp(args[0], "env") == 0)
