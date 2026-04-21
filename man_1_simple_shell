@@ -1,167 +1,123 @@
-.TH HSH 1 "April 2026" "1.0" "User Commands"
+.TH HSH 1 "April 2026" "1.0" "Simple Shell Manual"
 
 .SH NAME
-hsh \- simple UNIX command interpreter
+hsh \- a simple UNIX command line interpreter
 
 .SH SYNOPSIS
-.B hsh
-.br
-.B echo
-.I "command"
-|
-.B hsh
+.B ./hsh
 
 .SH DESCRIPTION
 .B hsh
-is a simple UNIX command line interpreter written in C, built as part of the
-Holberton School curriculum.
-It reads commands from standard input and executes them.
-It supports both interactive and non-interactive modes.
+is a simple UNIX command line interpreter that reads commands from standard
+input and executes them. It supports both interactive and non-interactive modes.
+
+In
+.B interactive mode,
+the shell displays a prompt
+.B ($)
+and waits for the user to enter a command.
+
+In
+.B non-interactive mode,
+the shell reads commands from a pipe or file without displaying a prompt.
 
 .SH USAGE
-
-.SS Interactive mode
-Launch the shell and type commands directly:
-
+.TP
+.B Interactive mode:
 .nf
 $ ./hsh
-$ ls
-$ /bin/ls
-$ exit
+($) ls
+($) exit
+$
 .fi
 
-.SS Non-interactive mode
-Pipe commands into the shell:
-
+.TP
+.B Non-interactive mode:
 .nf
 $ echo "ls" | ./hsh
-$ echo "/bin/ls -l" | ./hsh
-$ cat script.txt | ./hsh
+AUTHORS README.md ...
+$
 .fi
 
-.SH BUILTINS
+.SH EXECUTION
+When a command is entered, the shell performs the following steps:
 
+.IP 1. 3
+Reads a line of input using
+.BR getline (3).
+.IP 2. 3
+Parses the line into an array of tokens (command and arguments),
+splitting on spaces, tabs, and newlines.
+.IP 3. 3
+Checks if the command is a built-in. If so, executes it internally.
+.IP 4. 3
+Searches each directory listed in the
+.B PATH
+environment variable for an executable matching the command name.
+.IP 5. 3
+If found, forks a child process using
+.BR fork (2)
+and executes the command with
+.BR execve (2).
+.IP 6. 3
+If not found, prints an error message to stderr and continues.
+
+.SH BUILTINS
 The following built-in commands are supported:
 
 .TP
 .B exit
-Exit the shell with status 0.
+Exit the shell.
+.br
+Usage: \fBexit\fR
 
 .TP
 .B env
-Print all environment variables to standard output, one per line.
+Print all current environment variables to standard output, one per line.
+.br
+Usage: \fBenv\fR
 
 .SH EXIT STATUS
-
 .TP
 .B 0
-Success — the command executed without error.
-
-.TP
-.B 127
-Command not found — the given command could not be located in
-.BR PATH .
-
+Successful execution or exit.
 .TP
 .B 1
-Execution failure — the command was found but
-.BR execve (2)
-failed.
+Execution failure.
+.TP
+.B 127
+Command not found.
 
-.SH COMPILATION
-
-.nf
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
-.fi
-
-.SH MEMORY CHECK (VALGRIND)
-
-To check for memory leaks:
-
-.nf
-valgrind --leak-check=full --show-leak-kinds=all \\
-         --track-origins=yes ./hsh
-.fi
-
-.SH FEATURES
-
-.IP \(bu 2
-Displays a prompt and waits for user input (interactive mode)
-.IP \(bu 2
-Executes commands using their full path (e.g.
-.BR /bin/ls )
-.IP \(bu 2
-Searches for commands in the directories listed in
+.SH ENVIRONMENT
+.TP
 .B PATH
-.IP \(bu 2
-Handles end-of-file (Ctrl+D) gracefully
-.IP \(bu 2
-Supports the
-.B env
-and
-.B exit
-built-in commands
-.IP \(bu 2
-Works in non-interactive (piped) mode
+A colon-separated list of directories in which the shell searches for
+executable commands.
 
-.SH LIMITATIONS
+.SH ERRORS
+If a command is not found, the shell prints an error message similar to:
+.nf
+\fI./hsh\fR: \fIcommand\fR: not found
+.fi
 
-.IP \(bu 2
-No support for pipes
-.RB ( | )
-.IP \(bu 2
-No support for redirections
-.RB ( > ,
-.BR < ,
-.BR >> )
-.IP \(bu 2
-No support for semicolons or command chaining
-.IP \(bu 2
-No support for quotes or escape characters
-.IP \(bu 2
-No support for environment variable expansion
-.RB ( $VAR )
-.IP \(bu 2
-No history, no tab-completion
+If
+.BR fork (2)
+or
+.BR execve (2)
+fails, the shell prints the corresponding system error using
+.BR perror (3).
 
 .SH FILES
-
 .TP
-.B main.c
-Entry point of the shell.
+.B ./hsh
+The shell executable.
 
-.TP
-.B shell.c
-String splitting and command execution logic.
-
-.TP
-.B find_path.c
-PATH resolution — searches for the full path of a command.
-
-.TP
-.B builtins.c
-Built-in commands:
-.B exit
-and
-.BR env .
-
-.TP
-.B env.c
-Environment variable printing helper.
-
-.TP
-.B main.h
-Header file — function prototypes and includes.
+.SH AUTHORS
+Kevin Rigal and Sagal-Louise Haider
 
 .SH SEE ALSO
 .BR sh (1),
-.BR bash (1),
 .BR execve (2),
 .BR fork (2),
 .BR wait (2),
 .BR getline (3)
-
-.SH AUTHORS
-Sagal-Louise Haider (sagalou) \(em sagal.louise.haider@gmail.com
-.br
-Kevin Rigal (splint314) \(em krigal323@gmail.com
