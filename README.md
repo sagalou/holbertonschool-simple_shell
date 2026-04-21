@@ -159,7 +159,10 @@ $ echo "/bin/ls" | ./hsh
 
 To view the manual page for `hsh`, first move the man file to the appropriate directory and use the `man` command:
 
+Rename and install the man page:
+
 ```bash
+mv man_1_simple_shell hsh.1
 sudo cp hsh.1 /usr/share/man/man1/
 sudo gzip /usr/share/man/man1/hsh.1
 man hsh
@@ -173,32 +176,27 @@ man ./hsh.1
 
 ## ⚠️ Limitations
 
-Missing features
+### Missing features
 
-Command Arguments: Complex tabulation handling and advanced whitespace delimiters are not yet fully implemented.  
-Logical Operators: Support for command chaining using && and || logic is missing.  
-Variable Replacement: Does not currently handle shell variable expansion such as $? or $$.  
-Comments Support: The shell does not ignore text following the # character.  
-Command Separators: Ability to execute multiple commands separated by ; is not yet supported.  
-Script Execution: The shell cannot currently process a file passed as a command-line argument.  
+No support for:
+- pipes (|)  
+- command chaining (&&, ||, ;)  
+- variable expansion ($?, $$)  
+- comments (#)  
+- script execution  
 
-Missing builtins
+### Missing builtins
 
-cd: Missing the ability to change the current working directory using the chdir system call.  
-setenv: Missing the functionality to add or modify environment variables.  
-unsetenv: Missing the capability to remove an existing environment variable.  
-exit [status]: While shell handles exit, it currently lacks the feature to accept a numeric argument to return a specific exit status.  
-alias: Missing the system to define or display command aliases.  
-help: Missing an internal command to provide documentation for the shell's built-in functions.  
+- cd  
+- setenv  
+- unsetenv  
+- alias  
+- help  
 
-Robustness
+### Robustness
 
-No handling of very long lines  
-split_string does not handle multiple spaces or tabs between words  
-No SIGINT handling (Ctrl+C) — the shell inherits default behavior from the child process  
-find_path allocates with strdup but cmd is never freed in the parent after wait  
-
-
+- No handling of very long lines  
+- No SIGINT handling (Ctrl+C)  
 
 ## 🧪 Valgrind
 ```text
@@ -272,7 +270,7 @@ total 120
 ```
 ## ✨ Features
 
-- Display a prompt and wait for user input
+Display a prompt and wait for user input
 Interactive and Non-Interactive Modes: Supports manual command entry and piped input.  
 Command Execution: Finds and runs executable programs using the PATH.  
 Path Resolution: Correctly handles both absolute paths (e.g., /bin/ls) and relative command names (e.g., ls).  
@@ -285,7 +283,7 @@ Memory Efficiency: Designed to free all allocated memory before exiting to ensur
 | File | Description |
 |---|---|
 | `main.c` | Entry point|
-| `Builtins.c` | Built-in commands|
+| `builtins.c` | Built-in commands|
 | `main.h` | Core headers|
 | `shell.c` | Command handling|
 | `find_path.c` | Path resolution|
