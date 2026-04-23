@@ -286,7 +286,9 @@ Memory Efficiency: Designed to free all allocated memory before exiting to ensur
 | `builtins.c` | Built-in commands|
 | `main.h` | Core headers|
 | `shell.c` | Command handling|
-| `find_path.c` | Path resolution |
+| `find_path.c` | Path resolution|
+| `process_command.c` |Command execution logic|
+| `resolve_command.c` |Alternative PATH resolution|
 
 ## 👨‍💻 Authors
 
