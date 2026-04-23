@@ -276,6 +276,8 @@ $ exit
 | `main.h` | Core headers|
 | `shell.c` | Command handling|
 | `find_path.c` | Path resolution |
+| `process_command.c` | Parses and executes a command with its arguments |
+| `resolve_command.c` | Resolves a command to its full path |
 
 ## 👨‍💻 Authors
 
